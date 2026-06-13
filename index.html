@@ -84,6 +84,7 @@
   .book.has-cover:before{left:0;top:0;bottom:0;width:13px;border-radius:11px 0 0 11px;background:linear-gradient(180deg,rgba(255,250,220,.50),rgba(19,32,70,.94));box-shadow:1px 0 0 rgba(255,250,240,.34),7px 0 18px rgba(0,0,0,.28);z-index:4}
   .book.has-cover:after{content:"";position:absolute;inset:0;z-index:2;border-radius:12px;clip-path:inset(0 round 12px);background:linear-gradient(180deg,rgba(6,13,30,.82) 0%,rgba(7,17,38,.64) 24%,rgba(7,17,38,.24) 48%,rgba(7,17,38,.10) 72%,rgba(6,13,30,.16) 100%),linear-gradient(90deg,rgba(0,0,0,.25) 0 14px,transparent 40px);pointer-events:none}
   .book.has-cover .genre-image{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border:0;border-radius:12px;clip-path:inset(0 round 12px);margin:0;box-shadow:none;transition:transform .18s ease;z-index:1}
+  .book.has-cover .cover-placeholder{background:radial-gradient(circle at 72% 18%,rgba(255,244,198,.20),transparent 28%),radial-gradient(circle at 18% 72%,rgba(130,165,220,.18),transparent 32%),linear-gradient(145deg,#172b58 0%,#102044 52%,#071126 100%)}
   .book.has-cover:hover{transform:translateY(-4px);box-shadow:9px 8px 0 -1px rgba(255,250,238,.82),14px 13px 0 -3px rgba(235,226,210,.68),17px 16px 0 -5px rgba(139,128,112,.30),0 20px 20px -18px rgba(4,10,24,.46),0 0 0 1px rgba(255,250,240,.20) inset}
   .book.has-cover:hover .genre-image{transform:scale(1.025)}
   .book.has-cover .book-text{position:absolute;left:18px;right:12px;top:0;bottom:auto;padding:13px 0 48px;z-index:3}
@@ -206,13 +207,13 @@
     const makeBook = it => {
       const a = document.createElement('a');
       const genreImage = GENRE_IMAGES[it.slug];
-      a.className = genreImage ? 'book has-cover' : 'book';
+      a.className = 'book has-cover';
       a.href = `works/${it.slug}.html`;
-      const imageHtml = genreImage
+      const coverHtml = genreImage
         ? `<img class="genre-image" src="${genreImage.src}" alt="${genreImage.alt}" loading="lazy">`
-        : '';
+        : `<div class="genre-image cover-placeholder" aria-hidden="true"></div>`;
       a.innerHTML = `
-        ${imageHtml}
+        ${coverHtml}
         <div class="book-text">
           <div class="title">${it.title}</div>
           <div class="author">${it.author}</div>
