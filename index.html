@@ -12,7 +12,6 @@
     --book-w:168px;
     --obi-color:rgba(255,244,198,.58); --obi-thick:8px; --obi-bottom:18px;
     --accent:#fff4c6; --accent-soft:rgba(255,244,198,.12); --gold:#e9cf8c;
-    --book-card:#fff8ec; --book-ink:#102044; --book-sub:#506079; --book-line:#d8c9b9;
   }
   *{box-sizing:border-box}
   body{
@@ -75,15 +74,23 @@
 
   /* 表紙カード */
   .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--book-w),var(--book-w)));gap:18px;align-items:start;justify-content:start}
-  .book{position:relative;display:block;width:var(--book-w);min-height:176px;text-decoration:none;color:var(--book-ink);background:linear-gradient(90deg,#e8dfd2 0 9px,var(--book-card) 9px);border:1.5px solid var(--book-line);border-radius:12px;padding:16px 13px 26px 18px;box-shadow:0 14px 30px rgba(0,0,0,.24),0 0 0 1px rgba(255,255,255,.65) inset;transition:transform .12s ease,box-shadow .12s ease,background .2s;overflow:visible}
-  .book:before{content:"";position:absolute;left:9px;top:0;bottom:0;width:1px;background:rgba(16,32,68,.16)}
-  .book:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(0,0,0,.32),0 0 18px rgba(255,244,198,.08)}
-  .book .genre-image{display:block;width:100%;aspect-ratio:1 / 1;object-fit:cover;border-radius:10px;margin:0 0 10px;border:1px solid rgba(16,32,68,.16);box-shadow:0 8px 18px rgba(16,32,68,.18)}
-  .book.has-cover{min-height:0;padding-top:13px;padding-bottom:16px}
+  .book{position:relative;display:block;width:var(--book-w);min-height:176px;text-decoration:none;color:inherit;background:linear-gradient(90deg,rgba(255,244,198,.16) 0 9px,var(--card) 9px);border:1.5px solid var(--line);border-radius:12px;padding:16px 13px 26px 18px;box-shadow:0 14px 30px rgba(0,0,0,.22),0 0 0 1px rgba(255,250,240,.03) inset;transition:transform .12s ease,box-shadow .12s ease,background .2s;overflow:hidden}
+  .book:before{content:"";position:absolute;left:9px;top:0;bottom:0;width:1px;background:rgba(255,244,198,.22);z-index:3}
+  .book:hover{transform:translateY(-3px);box-shadow:0 18px 34px rgba(0,0,0,.3),0 0 18px rgba(255,244,198,.08)}
+  .book .book-text{position:relative;z-index:2}
+  .book .genre-image{display:block;width:100%;aspect-ratio:1 / 1;object-fit:cover;border-radius:10px;margin:0 0 10px;border:1px solid rgba(255,250,240,.18);box-shadow:0 8px 18px rgba(0,0,0,.22)}
+  .book.has-cover{aspect-ratio:2 / 3;min-height:0;padding:0;background:#0a1430;box-shadow:0 18px 34px rgba(0,0,0,.32),0 0 0 1px rgba(255,250,240,.05) inset}
+  .book.has-cover:before{left:0;width:12px;background:linear-gradient(180deg,rgba(255,244,198,.28),rgba(19,32,70,.9));box-shadow:1px 0 0 rgba(255,250,240,.2),6px 0 18px rgba(0,0,0,.24)}
+  .book.has-cover:after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,17,38,.06) 0%,rgba(7,17,38,.12) 42%,rgba(7,17,38,.74) 76%,rgba(6,13,30,.96) 100%),linear-gradient(90deg,rgba(0,0,0,.28) 0 13px,transparent 36px)}
+  .book.has-cover .genre-image{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border:0;border-radius:0;margin:0;box-shadow:none;transition:transform .18s ease}
+  .book.has-cover:hover .genre-image{transform:scale(1.025)}
+  .book.has-cover .book-text{position:absolute;left:18px;right:12px;bottom:0;padding:58px 0 15px;z-index:2}
   .book.has-cover .obi{display:none}
-  .book .title{font-weight:800;font-size:1rem;line-height:1.35;margin:0 0 6px;color:var(--book-ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-  .book .author{color:var(--book-sub);font-size:.9rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .book .obi{position:absolute;left:20px;right:12px;bottom:var(--obi-bottom);height:var(--obi-thick);background:#c9b89e}
+  .book .title{font-weight:800;font-size:1rem;line-height:1.35;margin:0 0 6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .book .author{color:var(--sub);font-size:.9rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .book.has-cover .title{font-size:1.08rem;line-height:1.32;color:#fffaf0;text-shadow:0 2px 10px rgba(0,0,0,.64)}
+  .book.has-cover .author{color:rgba(255,250,240,.82);font-size:.86rem;text-shadow:0 1px 8px rgba(0,0,0,.7)}
+  .book .obi{position:absolute;left:20px;right:12px;bottom:var(--obi-bottom);height:var(--obi-thick);background:var(--obi-color)}
   .book.empty{pointer-events:none}
   .load-error{color:#ffd1d1;margin:0}
   footer{padding:28px 16px;color:rgba(255,250,240,.62);border-top:1px solid var(--line)}
@@ -153,8 +160,8 @@
   <script>
     const CSV_URL = 'data/works.csv';
     const GENRE_IMAGES = {
-      '1005RIV01': {
-        src: 'https://esortseld.github.io/suyaneko_bunko/assets/ditective.png',
+      1005RIV01: {
+        src: 'assets/images/genre-mystery-blue.png',
         alt: '青い夜空と本、ランタン、虫眼鏡のミステリー画像'
       }
     };
@@ -202,8 +209,10 @@
         : '';
       a.innerHTML = `
         ${imageHtml}
-        <div class="title">${it.title}</div>
-        <div class="author">${it.author}</div>
+        <div class="book-text">
+          <div class="title">${it.title}</div>
+          <div class="author">${it.author}</div>
+        </div>
         <div class="obi"></div>
       `;
       return a;
