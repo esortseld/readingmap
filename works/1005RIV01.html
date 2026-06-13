@@ -3,23 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>リバー｜人物整理マップ</title>
-<meta name="description" content="奥田英朗『リバー』を読書中に人物確認するためのネタバレなし人物整理マップ。">
+<title>リバー｜読書地図</title>
+<meta name="description" content="奥田英朗『リバー』の読書地図。作品情報と登場人物MAPを整理。">
 <style>
 :root{--bg:#faf8f6;--card:#fff;--ink:#222;--sub:#555;--line:#eee;--soft:#f8efe8;--accent:#6d4b35;--accent-soft:#efe3d8}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75}
-header{padding:36px 16px;background:linear-gradient(180deg,var(--soft),transparent)}
+header{padding:36px 16px 20px;background:linear-gradient(180deg,var(--soft),transparent)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
 a.link{color:#345;text-decoration:none;border-bottom:1px solid #ccd}
-h1{margin:8px 0 4px;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.25}
-.meta{color:#666;margin:0 0 12px}
-.lead{max-width:44em;margin:14px 0 0;color:var(--sub)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0}
-.card h2{margin:0 0 8px;color:var(--accent);font-size:1.05rem}
-.case-notes{margin:0;padding-left:1.2em;color:var(--sub)}
-.case-notes li{margin:.25em 0}
-.map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:14px;margin:18px 0 30px}
+h1{margin:8px 0 4px;font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.2;letter-spacing:.02em}
+.meta{color:#666;margin:0 0 12px;font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;margin:18px 0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 24px}
+.tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:rgba(255,255,255,.7);font-size:.92rem;color:#333}
+.book-info{display:grid;grid-template-columns:minmax(8em,18em) 1fr;gap:10px 22px;margin:0}
+.book-info dt{color:#334;font-weight:500}
+.book-info dd{margin:0;color:var(--ink)}
+.section-title{margin:28px 0 12px;font-size:1.25rem;color:var(--accent);letter-spacing:.02em}
+.map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:14px;margin:12px 0 30px}
 .character-group{overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px}
 .character-group h2{margin:0;padding:12px 14px;background:var(--accent-soft);color:var(--accent);font-size:1rem;line-height:1.45;border-bottom:1px solid var(--line)}
 .character-list{display:grid}
@@ -31,31 +33,42 @@ h1{margin:8px 0 4px;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.25}
 .relation{display:block!important;margin-top:2px!important;padding-left:1.35em;color:var(--sub);font-size:.9rem;line-height:1.5}
 .relation span{display:inline-block;min-width:6.2em;color:var(--accent);font-weight:700}
 footer{padding:28px 16px;color:#777}
+@media (max-width:680px){.book-info{grid-template-columns:1fr;gap:2px 0}.book-info dt{margin-top:10px}.card{padding:20px 18px}}
 @media (prefers-color-scheme:dark){
   :root{--bg:#0f0e0e;--card:#151515;--ink:#eee;--sub:#aaa;--line:#2a2a2a;--soft:#1a1816;--accent:#d9b894;--accent-soft:#211b16}
-  a.link{color:#cfe2ff;border-bottom-color:#2a3f66}
+  a.link{color:#cfe2ff;border-bottom-color:#2a3f66}.tag{background:#151515;color:#ddd}
 }
 </style>
 </head>
 <body>
 <header class="wrap">
   <a class="link" href="../index.html">← 読書地図にもどる</a>
-  <h1>リバー｜人物整理マップ</h1>
-  <p class="meta">著者：奥田英朗</p>
-  <p class="lead">読書中に人物を確認するためのネタバレなし整理です。<br>結末・真相・後半で判明する核心的な関係は記載していません。</p>
+  <h1>リバー</h1>
+  <p class="meta">奥田英朗</p>
 </header>
 
 <main class="wrap">
-  <section class="card" aria-label="リバーの時系列メモ">
-    <h2>時系列メモ</h2>
-    <ul class="case-notes">
-      <li>2009年5月、栃木県足利市で事件があった。</li>
-      <li>その半月後、群馬県桐生市で同様の事件があった。</li>
-      <li>現在、群馬県で5月8日に事件が発生。続いて5月13日、足利で事件が発生している。</li>
-    </ul>
+  <section class="card" aria-label="リバーの作品情報">
+    <div class="tags" aria-label="タグ">
+      <span class="tag">ミステリー</span>
+      <span class="tag">事件</span>
+      <span class="tag">警察</span>
+      <span class="tag">群像</span>
+    </div>
+    <dl class="book-info">
+      <dt>出版社</dt><dd>集英社</dd>
+      <dt>刊行</dt><dd>2022年9月</dd>
+      <dt>ページ数</dt><dd></dd>
+      <dt>初出</dt><dd></dd>
+      <dt>作品タイプ</dt><dd>推理（who x why）</dd>
+      <dt>整理番号</dt><dd></dd>
+      <dt>場所設定</dt><dd>群馬・栃木（桐生／足利）</dd>
+      <dt>作者名よみデータ整理用</dt><dd>おくだひでお</dd>
+    </dl>
   </section>
 
-  <section class="map-grid" aria-label="リバーの人物整理">
+  <h2 class="section-title">登場人物MAP</h2>
+  <section class="map-grid" aria-label="リバーの登場人物MAP">
     <article class="character-group">
       <h2>群馬県警</h2>
       <div class="character-list">
