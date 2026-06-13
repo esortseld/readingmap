@@ -6,38 +6,74 @@
 <title>リバー｜読書地図</title>
 <meta name="description" content="奥田英朗『リバー』の読書地図。作品情報と登場人物MAPを整理。">
 <style>
-:root{--bg:#faf8f6;--card:#fff;--ink:#222;--sub:#555;--line:#eee;--soft:#f8efe8;--accent:#6d4b35;--accent-soft:#efe3d8}
+:root{
+  --bg:#071126;
+  --bg-mid:#101a3a;
+  --paper:#fff8ec;
+  --panel:#fffaf4;
+  --ink:#102044;
+  --page-ink:#fffaf0;
+  --sub:#506079;
+  --page-sub:#c8d2ec;
+  --line:#d8c9b9;
+  --page-line:rgba(190,210,255,.18);
+  --accent:#1b3c73;
+  --accent-deep:#102044;
+  --accent-soft:#e8effb;
+  --gold:#e9cf8c;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg);line-height:1.75}
-header{padding:36px 16px 20px;background:linear-gradient(180deg,var(--soft),transparent)}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans JP",sans-serif;
+  color:var(--page-ink);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(255,244,198,.18), transparent 14rem),
+    radial-gradient(circle at 14% 12%, rgba(120,158,255,.14), transparent 12rem),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg-mid) 44%,#0b1530 100%);
+  line-height:1.75;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.72) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255,244,198,.62) 0 1.2px, transparent 2.2px);
+  background-position:18px 22px,82px 54px;
+  background-size:96px 96px,141px 141px;
+  opacity:.25;
+}
+header{padding:36px 16px 24px;background:linear-gradient(180deg,rgba(7,17,38,.96) 0%,rgba(16,26,58,.84) 74%,transparent 100%)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
-a.link{color:#345;text-decoration:none;border-bottom:1px solid #ccd}
-h1{margin:8px 0 4px;font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.2;letter-spacing:.02em}
-.meta{color:#666;margin:0 0 12px;font-size:1.05rem}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;margin:18px 0}
+a.link{display:inline-flex;align-items:center;gap:.4em;color:var(--page-sub);text-decoration:none;border-bottom:1px solid rgba(255,244,198,.35)}
+a.link:hover{color:var(--gold);border-bottom-color:var(--gold)}
+h1{margin:14px 0 4px;font-size:clamp(2.1rem,5vw,3.2rem);line-height:1.2;letter-spacing:.04em;color:var(--page-ink)}
+.meta{color:var(--page-sub);margin:0 0 12px;font-size:1.05rem}
+.card{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:22px;padding:26px 24px;margin:18px 0;box-shadow:0 16px 36px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.55) inset}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 24px}
-.tag{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:rgba(255,255,255,.7);font-size:.92rem;color:#333}
+.tag{display:inline-flex;align-items:center;border:1px solid #cdd8ef;border-radius:999px;padding:4px 12px;background:#eef4ff;font-size:.92rem;color:var(--accent-deep);font-weight:700}
 .book-info{display:grid;grid-template-columns:minmax(8em,18em) 1fr;gap:10px 22px;margin:0}
-.book-info dt{color:#334;font-weight:500}
+.book-info dt{color:var(--accent-deep);font-weight:800}
 .book-info dd{margin:0;color:var(--ink)}
-.section-title{margin:28px 0 12px;font-size:1.25rem;color:var(--accent);letter-spacing:.02em}
+.section-title{position:relative;display:flex;align-items:center;gap:10px;margin:34px 0 14px;font-size:1.35rem;color:var(--page-ink);letter-spacing:.03em}
+.section-title:before{content:"*";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:rgba(255,244,198,.12);border:1px solid var(--page-line);color:var(--gold);font-size:1rem;line-height:1}
+.section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--page-line),transparent)}
 .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:14px;margin:12px 0 30px}
-.character-group{overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px}
-.character-group h2{margin:0;padding:12px 14px;background:var(--accent-soft);color:var(--accent);font-size:1rem;line-height:1.45;border-bottom:1px solid var(--line)}
+.character-group{overflow:hidden;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 14px 30px rgba(0,0,0,.18),0 0 0 1px rgba(255,255,255,.45) inset}
+.character-group h2{margin:0;padding:12px 14px;background:linear-gradient(90deg,#e8effb,#f7f1e8);color:var(--accent-deep);font-size:1rem;line-height:1.45;border-bottom:1px solid var(--line)}
 .character-list{display:grid}
-.character-row{padding:10px 14px;border-bottom:1px solid var(--line)}
+.character-row{padding:10px 14px;border-bottom:1px solid #eadfd4}
 .character-row:last-child{border-bottom:0}
 .character-row p{display:flex;flex-wrap:wrap;gap:0 .65em;align-items:baseline;margin:0;line-height:1.6}
-.character-row strong{font-weight:700;color:var(--ink)}
+.character-row strong{font-weight:800;color:var(--ink)}
 .character-row p>span{color:var(--sub);font-size:.92rem}
 .relation{display:block!important;margin-top:2px!important;padding-left:1.35em;color:var(--sub);font-size:.9rem;line-height:1.5}
-.relation span{display:inline-block;min-width:6.2em;color:var(--accent);font-weight:700}
-footer{padding:28px 16px;color:#777}
+.relation span{display:inline-block;min-width:6.2em;color:var(--accent);font-weight:800}
+footer{padding:28px 16px;color:rgba(255,250,240,.62);border-top:1px solid var(--page-line)}
 @media (max-width:680px){.book-info{grid-template-columns:1fr;gap:2px 0}.book-info dt{margin-top:10px}.card{padding:20px 18px}}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#0f0e0e;--card:#151515;--ink:#eee;--sub:#aaa;--line:#2a2a2a;--soft:#1a1816;--accent:#d9b894;--accent-soft:#211b16}
-  a.link{color:#cfe2ff;border-bottom-color:#2a3f66}.tag{background:#151515;color:#ddd}
-}
 </style>
 </head>
 <body>
