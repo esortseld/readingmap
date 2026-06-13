@@ -15,7 +15,10 @@ a.link{color:#345;text-decoration:none;border-bottom:1px solid #ccd}
 h1{margin:8px 0 4px;font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.25}
 .meta{color:#666;margin:0 0 12px}
 .lead{max-width:44em;margin:14px 0 0;color:var(--sub)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0}
+.card h2{margin:0 0 8px;color:var(--accent);font-size:1.05rem}
+.case-notes{margin:0;padding-left:1.2em;color:var(--sub)}
+.case-notes li{margin:.25em 0}
 .map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:14px;margin:18px 0 30px}
 .character-group{overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:14px}
 .character-group h2{margin:0;padding:12px 14px;background:var(--accent-soft);color:var(--accent);font-size:1rem;line-height:1.45;border-bottom:1px solid var(--line)}
@@ -43,6 +46,17 @@ footer{padding:28px 16px;color:#777}
 </header>
 
 <main class="wrap">
+  <section class="card" aria-label="リバーの事件メモ">
+    <h2>事件メモ</h2>
+    <ul class="case-notes">
+      <li>10年前、栃木県足利市で事件があった。</li>
+      <li>現在、群馬県桐生市と栃木県足利市でそれぞれ事件が発生している。</li>
+      <li>桐生の事件は藤原達夫が発見者。被害者は安藤麻衣子、23歳。</li>
+      <li>足利の事件は本田英輔が発見者。被害者は渡辺沙也加、21歳。</li>
+      <li>群馬県警本部は前橋市にある。</li>
+    </ul>
+  </section>
+
   <section class="map-grid" aria-label="リバーの人物整理">
     <article class="character-group">
       <h2>群馬・桐生事件側</h2>
@@ -51,20 +65,17 @@ footer{padding:28px 16px;color:#777}
           <p><strong>藤原達夫</strong><span>発見者／群馬県桐生市</span></p>
           <p class="relation"><span>└ タロー</span>飼い犬</p>
         </div>
-        <div class="character-row"><p><strong>池田清</strong><span>10年前の事件の容疑者</span></p></div>
+        <div class="character-row"><p><strong>安藤麻衣子</strong><span>被害者／23歳</span></p></div>
       </div>
     </article>
 
     <article class="character-group">
       <h2>群馬県警</h2>
       <div class="character-list">
-        <div class="character-row"><p><strong>斎藤一馬</strong><span>刑事34歳／10年前：高崎市内交番</span></p></div>
+        <div class="character-row"><p><strong>斎藤一馬</strong><span>警部補／捜査一課三係／34歳／10年前：高崎市内交番</span></p></div>
         <div class="character-row"><p><strong>武田</strong><span>刑事部長</span></p></div>
-        <div class="character-row"><p><strong>中村</strong><span>刑事部長</span></p></div>
         <div class="character-row"><p><strong>堀部</strong><span>捜査一課長</span></p></div>
-        <div class="character-row"><p><strong>広川</strong><span>捜査一課長</span></p></div>
         <div class="character-row"><p><strong>西村</strong><span>管理官</span></p></div>
-        <div class="character-row"><p><strong>宮田</strong><span>管理官</span></p></div>
         <div class="character-row"><p><strong>木田</strong><span>桐生南署長</span></p></div>
         <div class="character-row"><p><strong>内田</strong><span>三係長・警部</span></p></div>
         <div class="character-row"><p><strong>久保</strong><span>係長補佐／10年前：太田東署生活安全課</span></p></div>
@@ -85,20 +96,24 @@ footer{padding:28px 16px;color:#777}
       <h2>栃木・足利事件側</h2>
       <div class="character-list">
         <div class="character-row">
-          <p><strong>本田英輔</strong><span>発見者23歳／栃木県足利市</span></p>
+          <p><strong>本田英輔</strong><span>発見者／23歳／栃木県足利市</span></p>
           <p class="relation"><span>└ 鈴木</span>会社の先輩25歳</p>
         </div>
         <div class="character-row">
-          <p><strong>渡辺沙也加</strong><span>被害者／栃木県足利市</span></p>
+          <p><strong>渡辺沙也加</strong><span>被害者／21歳／栃木県足利市</span></p>
           <p class="relation"><span>└ 渡辺幸一</span>父</p>
         </div>
+        <div class="character-row"><p><strong>池田清</strong><span>10年前の栃木県足利市での事件の容疑者</span></p></div>
       </div>
     </article>
 
     <article class="character-group">
       <h2>栃木県警・足利北署</h2>
       <div class="character-list">
-        <div class="character-row"><p><strong>野島昌弘</strong><span>巡査部長</span></p></div>
+        <div class="character-row"><p><strong>中村</strong><span>刑事部長</span></p></div>
+        <div class="character-row"><p><strong>広川</strong><span>捜査一課長</span></p></div>
+        <div class="character-row"><p><strong>宮田</strong><span>管理官</span></p></div>
+        <div class="character-row"><p><strong>野島昌弘</strong><span>足利北署 刑事第一課／巡査部長</span></p></div>
         <div class="character-row"><p><strong>土井</strong><span>課長</span></p></div>
         <div class="character-row"><p><strong>山下</strong><span>主任／ベテラン刑事</span></p></div>
       </div>
