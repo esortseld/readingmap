@@ -25,7 +25,10 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
   .card h3{margin:0 0 6px;font-size:1.05rem}
   .card p{margin:0;color:var(--sub)}
-  .works-title{margin:0 0 14px;font-size:1.35rem;color:var(--accent)}
+  .works-title{position:relative;display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:clamp(1.35rem,3vw,1.75rem);color:var(--accent);letter-spacing:.03em}
+  .works-title:before{content:"⌕";display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent-soft);font-size:1.1rem;line-height:1;color:var(--accent)}
+  .works-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+  .works-note{margin:0 0 18px;color:var(--sub);font-size:.94rem}
   .author-section{margin:0 0 28px;padding:18px 0 26px;border-top:1px solid var(--line)}
   .author-section:last-child{border-bottom:1px solid var(--line)}
   .author-heading{display:inline-flex;align-items:center;margin:0 0 14px;padding:4px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:1rem;font-weight:700;letter-spacing:.12em}
@@ -72,8 +75,9 @@
       </article>
     </section>
 
-    <section aria-label="作品一覧">
-      <h2 class="works-title">作品一覧</h2>
+    <section aria-label="作者名から本を見つける地図">
+      <h2 class="works-title">作者名から本を見つける地図</h2>
+      <p class="works-note">作者名を手がかりに、次に読む一冊を探します。</p>
       <div id="books"></div>
     </section>
   </main>
