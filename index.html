@@ -10,24 +10,28 @@
     --bg:#faf8f6; --card:#fff; --ink:#222; --sub:#555; --line:#eee; --btnbg:#f3f1ef;
     --book-w:168px; --book-ratio:2/3;
     --obi-color:#c8c8c8; --obi-thick:8px; --obi-bottom:65%;
+    --accent:#6d4b35; --accent-soft:#efe3d8;
   }
   *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans JP",sans-serif;color:var(--ink);background:var(--bg)}
-  header{padding:48px 16px;background:linear-gradient(180deg,#f8efe8,transparent)}
+  header{padding:48px 16px 28px;background:linear-gradient(180deg,#f8efe8,transparent)}
   .wrap{max-width:960px;margin:0 auto;padding:0 16px}
   h1{margin:0 0 8px;font-size:clamp(1.6rem,3.5vw,2.4rem)}
   .tagline{margin:0;color:var(--sub)}
   .hero{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
   .btn{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--btnbg);color:var(--ink);text-decoration:none;font-weight:600}
   main{padding:24px 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
   .card h3{margin:0 0 6px;font-size:1.05rem}
   .card p{margin:0;color:var(--sub)}
-  footer{padding:28px 16px;color:#777}
+  .works-title{margin:0 0 14px;font-size:1.35rem;color:var(--accent)}
+  .author-section{margin:0 0 28px;padding:18px 0 26px;border-top:1px solid var(--line)}
+  .author-section:last-child{border-bottom:1px solid var(--line)}
+  .author-heading{display:inline-flex;align-items:center;margin:0 0 14px;padding:4px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:1rem;font-weight:700;letter-spacing:.12em}
 
   /* 表紙カード */
-  .books{display:grid;grid-template-columns:repeat(auto-fill, minmax(var(--book-w), var(--book-w)));gap:16px;margin-top:14px;justify-content:start}
+  .books{display:grid;grid-template-columns:repeat(auto-fill, minmax(var(--book-w), var(--book-w)));gap:16px;justify-content:start}
   .book{position:relative;display:block;width:var(--book-w);aspect-ratio:var(--book-ratio);text-decoration:none;color:inherit;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:14px 12px 14px 16px;box-shadow:0 2px 0 rgba(0,0,0,.03);transition:transform .12s ease, box-shadow .12s ease, background .2s;overflow:hidden}
   .book:before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:linear-gradient(90deg, rgba(0,0,0,.06), transparent);border-top-left-radius:10px;border-bottom-left-radius:10px}
   .book:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.06)}
@@ -35,9 +39,10 @@
   .book .author{color:var(--sub);font-size:.9rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .book .obi{position:absolute;left:12px;right:12px;bottom:var(--obi-bottom);height:var(--obi-thick);background:var(--obi-color)}
   .book.empty{pointer-events:none}
+  .load-error{color:#b00;margin:0}
 
   @media (prefers-color-scheme: dark){
-    :root{--bg:#0f0e0e;--card:#151515;--ink:#eee;--sub:#aaa;--line:#2a2a2a;--btnbg:#1a1a1a;--obi-color:#6a6a6a}
+    :root{--bg:#0f0e0e;--card:#151515;--ink:#eee;--sub:#aaa;--line:#2a2a2a;--btnbg:#1a1a1a;--obi-color:#6a6a6a;--accent:#d9b894;--accent-soft:#211b16}
     header{background:linear-gradient(180deg,#1a1816,transparent)}
   }
 </style>
@@ -52,8 +57,6 @@
         <a class="btn" href="./">ホーム</a>
         <a class="btn" href="https://esortseld.github.io/suyaneko_bunko/">すやネコ文庫（トップ）</a>
       </div>
-
-      <div class="books" id="books"></div>
     </div>
   </header>
 
@@ -68,6 +71,11 @@
         <p>更新はGitHubでHTMLやCSVを差し替えるだけ。YouTubeやInstagramからこのページへ誘導します。</p>
       </article>
     </section>
+
+    <section aria-label="作品一覧">
+      <h2 class="works-title">作品一覧</h2>
+      <div id="books"></div>
+    </section>
   </main>
 
   <footer><div class="wrap"><small>© すやネコ文庫 / Reading Map</small></div></footer>
@@ -79,9 +87,10 @@
 
     // 列名のゆれ対応（slugは英数字のみを想定）
     const ALIAS = {
-      slug:   ['slug','Slug','SLUG'],
-      title:  ['title','作品名','書名'],
-      author: ['author','作者','著者']
+      slug:       ['slug','Slug','SLUG'],
+      title:      ['title','作品名','書名'],
+      author:     ['author','作者','著者'],
+      authorYomi: ['author_yomi','作者名よみ','作者よみ','著者名よみ','著者よみ','作者名よみデータ整理用']
     };
     const pick = (row, keys) => {
       for (const k of keys) {
@@ -92,43 +101,76 @@
     };
     // 英数字以外を除去して正規化（保険）
     const cleanSlug = s => String(s).replace(/[^A-Za-z0-9]/g,'').trim();
+    const toHiragana = s => String(s).replace(/[ァ-ン]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+    const groupOf = yomi => {
+      const first = toHiragana(yomi).charAt(0);
+      if ('あいうえお'.includes(first)) return 'あいうえお';
+      if ('かきくけこがぎぐげご'.includes(first)) return 'かきくけこ';
+      if ('さしすせそざじずぜぞ'.includes(first)) return 'さしすせそ';
+      if ('たちつてとだぢづでど'.includes(first)) return 'たちつてと';
+      if ('なにぬねの'.includes(first)) return 'なにぬねの';
+      if ('はひふへほばびぶべぼぱぴぷぺぽ'.includes(first)) return 'はひふへほ';
+      if ('まみむめも'.includes(first)) return 'まみむめも';
+      if ('やゆよ'.includes(first)) return 'やゆよ';
+      if ('らりるれろ'.includes(first)) return 'らりるれろ';
+      if ('わをん'.includes(first)) return 'わをん';
+      return 'その他';
+    };
+    const GROUPS = ['あいうえお','かきくけこ','さしすせそ','たちつてと','なにぬねの','はひふへほ','まみむめも','やゆよ','らりるれろ','わをん','その他'];
+
+    const makeBook = it => {
+      const a = document.createElement('a');
+      a.className = 'book';
+      a.href = `works/${it.slug}.html`;
+      a.innerHTML = `
+        <div class="title">${it.title}</div>
+        <div class="author">${it.author}</div>
+        <div class="obi"></div>
+      `;
+      return a;
+    };
 
     Papa.parse(CSV_URL, {
       download:true, header:true, skipEmptyLines:true, encoding:'utf-8',
       complete: ({data})=>{
         const items = data.map(r=>({
-          slug:   cleanSlug(pick(r, ALIAS.slug)),
-          title:  pick(r, ALIAS.title),
-          author: pick(r, ALIAS.author)
+          slug:       cleanSlug(pick(r, ALIAS.slug)),
+          title:      pick(r, ALIAS.title),
+          author:     pick(r, ALIAS.author),
+          authorYomi: pick(r, ALIAS.authorYomi) || pick(r, ALIAS.author)
         })).filter(x => x.slug && x.title && x.author);
+
+        items.sort((a,b)=>{
+          const yomiCompare = a.authorYomi.localeCompare(b.authorYomi, 'ja');
+          if (yomiCompare !== 0) return yomiCompare;
+          return a.title.localeCompare(b.title, 'ja');
+        });
 
         const wrap = document.getElementById('books');
         const frag = document.createDocumentFragment();
 
-        items.forEach(it=>{
-          const a = document.createElement('a');
-          a.className = 'book';
-          a.href = `works/${it.slug}.html`;
-          a.innerHTML = `
-            <div class="title">${it.title}</div>
-            <div class="author">${it.author}</div>
-            <div class="obi"></div>
-          `;
-          frag.appendChild(a);
+        GROUPS.forEach(groupName => {
+          const groupItems = items.filter(it => groupOf(it.authorYomi) === groupName);
+          if (!groupItems.length) return;
+
+          const section = document.createElement('section');
+          section.className = 'author-section';
+          section.innerHTML = `<h3 class="author-heading">${groupName}</h3>`;
+
+          const books = document.createElement('div');
+          books.className = 'books';
+          groupItems.forEach(it => books.appendChild(makeBook(it)));
+
+          section.appendChild(books);
+          frag.appendChild(section);
         });
 
-        while (frag.childNodes.length < 6) {
-          const e = document.createElement('div');
-          e.className = 'book empty';
-          e.innerHTML = `<div class="obi"></div>`;
-          frag.appendChild(e);
-        }
         wrap.textContent = '';
         wrap.appendChild(frag);
       },
       error: err=>{
         console.error(err);
-        document.getElementById('books').innerHTML = '<p style="color:#b00">データ読み込みに失敗しました。</p>';
+        document.getElementById('books').innerHTML = '<p class="load-error">データ読み込みに失敗しました。</p>';
       }
     });
   </script>
